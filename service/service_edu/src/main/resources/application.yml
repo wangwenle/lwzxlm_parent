@@ -1,0 +1,36 @@
+server:
+  port: 8001 # 服务端口
+spring:
+  application:
+    name: service-edu # 服务名
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 # nacos服务地址
+  datasource: # mysql数据库连接
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lwzxlm?serverTimezone=GMT%2B8
+    password: root
+    username: root
+  jackson: #返回json的全局时间格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  profiles:
+    active: dev # 环境设置：dev、test、prod
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #mybatis日志
+  mapper-locations: classpath:com/atguigu/eduservice/mapper/xml/*.xml #配置mapper xml文件的路径
+feign: #开启熔断机制
+  hystrix:
+    enabled: true
+hystrix: # 设置hystrix超时时间，默认1000ms
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000
+logging: # 设置日志级别
+  level:
+    root: INFO
